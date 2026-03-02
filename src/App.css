@@ -1,0 +1,111 @@
+.hero-gradient {
+    background: linear-gradient(135deg, #0F3D2E 0%, #155D45 50%, #0A291F 100%);
+}
+
+.gold-text {
+    background: linear-gradient(to right, #D4AF37, #B89628);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.card-hover {
+    transition: all 0.3s ease;
+}
+
+.card-hover:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+}
+
+.btn-primary {
+    background-color: #0F3D2E;
+    color: white;
+    transition: all 0.3s ease;
+}
+
+.btn-primary:hover {
+    background-color: #165942;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(15, 61, 46, 0.3);
+}
+
+.btn-secondary {
+    background-color: #D4AF37;
+    color: #0F3D2E;
+    transition: all 0.3s ease;
+}
+
+.btn-secondary:hover {
+    background-color: #E5C158;
+    transform: translateY(-2px);
+}
+
+.status-badge {
+    display: inline-block;
+    padding: 0.25rem 0.75rem;
+    border-radius: 9999px;
+    font-size: 0.875rem;
+    font-weight: 500;
+}
+
+.status-new { background-color: #DBEAFE; color: #1E40AF; }
+.status-offered { background-color: #FEF3C7; color: #92400E; }
+.status-accepted { background-color: #D1FAE5; color: #065F46; }
+.status-assigned { background-color: #E0E7FF; color: #3730A3; }
+.status-in_progress { background-color: #FBBF24; color: #78350F; }
+.status-completed { background-color: #10B981; color: white; }
+.status-cancelled { background-color: #FEE2E2; color: #991B1B; }
+
+.sidebar-link {
+    display: flex;
+    align-items: center;
+    padding: 0.75rem 1rem;
+    border-radius: 0.5rem;
+    transition: all 0.2s ease;
+    color: #4B5563;
+    gap: 0.75rem;
+}
+
+.sidebar-link:hover {
+    background-color: #F2F7F5;
+    color: #0F3D2E;
+}
+
+.sidebar-link.active {
+    background-color: #0F3D2E;
+    color: white;
+}
+
+.fade-in {
+    animation: fadeIn 0.5s ease-in;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Hide Emergent Agent branding badge */
+a[href*="emergent"] {
+    &:is([style*="fixed"], [style*="position"]) {
+        display: none !important;
+    }
+}
+
+div:has(> a[href*="emergent"]):is([style*="fixed"]) {
+    display: none !important;
+}
+
+/* Generic fixed bottom-right badge removal */
+body > div:not(#root):last-child:is([style*="fixed"][style*="right"][style*="bottom"]),
+body > a:is([style*="fixed"][style*="right"][style*="bottom"]),
+body > iframe:is([style*="fixed"][style*="right"][style*="bottom"]) {
+    display: none !important;
+}
