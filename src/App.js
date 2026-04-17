@@ -1,4 +1,11 @@
-import { BrowserRouter, Routes, Route, Navigate, useLocation, useNavigate } from "react-router-dom";
+import {
+  BrowserRouter,
+  Routes,
+  Route,
+  Navigate,
+  useLocation,
+  useNavigate,
+} from "react-router-dom";
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import "@/App.css";
@@ -10,42 +17,185 @@ import AdminDashboard from "./pages/AdminDashboard";
 import SchoolAdminDashboard from "./pages/SchoolAdminDashboard";
 import TeacherDashboard from "./pages/TeacherDashboard";
 import StudentDashboard from "./pages/StudentDashboard";
+import GuardianDashboard from "./pages/GuardianDashboard";
 import CreateRequest from "./pages/CreateRequest";
 import RequestDetail from "./pages/RequestDetail";
 import MyRequests from "./pages/MyRequests";
 import MyAssignments from "./pages/MyAssignments";
+import AssignmentDetail from "./pages/AssignmentDetail";
 import ProfileSetup from "./pages/ProfileSetup";
+import SchoolSetup from "./pages/SchoolSetup";
+import ForgotPassword from "./pages/ForgotPassword";
+import UserManagement from "./pages/UserManagement";
+import BrowseTeachers from "./pages/BrowseTeachers";
+import TeacherDetail from "./pages/TeacherDetail";
+import Payments from "./pages/Payments";
+import ScheduleCalendar from "./pages/ScheduleCalendar";
+import TermsOfService from "./pages/TermsOfService";
+import PrivacyPolicy from "./pages/PrivacyPolicy";
 
 const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
 const API = `${BACKEND_URL}/api`;
 
 function AppRouter() {
   const location = useLocation();
-  
+
   // REMINDER: DO NOT HARDCODE THE URL, OR ADD ANY FALLBACKS OR REDIRECT URLS, THIS BREAKS THE AUTH
   // Check for session_id synchronously during render (prevents race conditions)
-  if (location.hash?.includes('session_id=')) {
+  if (location.hash?.includes("session_id=")) {
     return <AuthCallback />;
   }
-  
+
   return (
     <Routes>
       <Route path="/" element={<LandingPage />} />
       <Route path="/login" element={<LoginPage />} />
       <Route path="/signup" element={<SignupPage />} />
-      
+      <Route path="/forgot-password" element={<ForgotPassword />} />
+      <Route path="/terms" element={<TermsOfService />} />
+      <Route path="/privacy" element={<PrivacyPolicy />} />
+
       {/* Protected Routes */}
-      <Route path="/admin" element={<ProtectedRoute allowedRoles={["admin"]}><AdminDashboard /></ProtectedRoute>} />
-      <Route path="/school-admin" element={<ProtectedRoute allowedRoles={["school_admin"]}><SchoolAdminDashboard /></ProtectedRoute>} />
-      <Route path="/teacher" element={<ProtectedRoute allowedRoles={["teacher"]}><TeacherDashboard /></ProtectedRoute>} />
-      <Route path="/student" element={<ProtectedRoute allowedRoles={["student", "guardian"]}><StudentDashboard /></ProtectedRoute>} />
-      
-      <Route path="/requests/new" element={<ProtectedRoute><CreateRequest /></ProtectedRoute>} />
-      <Route path="/requests/:id" element={<ProtectedRoute><RequestDetail /></ProtectedRoute>} />
-      <Route path="/requests" element={<ProtectedRoute><MyRequests /></ProtectedRoute>} />
-      <Route path="/assignments" element={<ProtectedRoute><MyAssignments /></ProtectedRoute>} />
-      <Route path="/profile" element={<ProtectedRoute><ProfileSetup /></ProtectedRoute>} />
-      
+      <Route
+        path="/admin"
+        element={
+          <ProtectedRoute allowedRoles={["admin"]}>
+            <AdminDashboard />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/admin/users"
+        element={
+          <ProtectedRoute allowedRoles={["admin"]}>
+            <UserManagement />
+          </ProtectedRoute>
+        }
+      />
+
+      <Route
+        path="/school-admin"
+        element={
+          <ProtectedRoute allowedRoles={["school_admin"]}>
+            <SchoolAdminDashboard />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/school-setup"
+        element={
+          <ProtectedRoute allowedRoles={["school_admin"]}>
+            <SchoolSetup />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/teacher"
+        element={
+          <ProtectedRoute allowedRoles={["teacher"]}>
+            <TeacherDashboard />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/student"
+        element={
+          <ProtectedRoute allowedRoles={["student"]}>
+            <StudentDashboard />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/guardian"
+        element={
+          <ProtectedRoute allowedRoles={["guardian"]}>
+            <GuardianDashboard />
+          </ProtectedRoute>
+        }
+      />
+
+      <Route
+        path="/requests/new"
+        element={
+          <ProtectedRoute>
+            <CreateRequest />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/requests/:id"
+        element={
+          <ProtectedRoute>
+            <RequestDetail />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/requests"
+        element={
+          <ProtectedRoute>
+            <MyRequests />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/assignments/:id"
+        element={
+          <ProtectedRoute>
+            <AssignmentDetail />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/assignments"
+        element={
+          <ProtectedRoute>
+            <MyAssignments />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/profile"
+        element={
+          <ProtectedRoute>
+            <ProfileSetup />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/teachers"
+        element={
+          <ProtectedRoute>
+            <BrowseTeachers />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/teachers/:teacherId"
+        element={
+          <ProtectedRoute>
+            <TeacherDetail />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/payments"
+        element={
+          <ProtectedRoute>
+            <Payments />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/schedule"
+        element={
+          <ProtectedRoute>
+            <ScheduleCalendar />
+          </ProtectedRoute>
+        }
+      />
+
+
       <Route path="*" element={<Navigate to="/" />} />
     </Routes>
   );
@@ -57,64 +207,70 @@ function ProtectedRoute({ children, allowedRoles }) {
   const navigate = useNavigate();
   const location = useLocation();
   const { t, i18n } = useTranslation();
-  
+
   useEffect(() => {
-    // If user data passed from AuthCallback, skip auth check
-    if (location.state?.user) {
-      setUser(location.state.user);
-      setIsAuthenticated(true);
-      return;
-    }
-    
     const checkAuth = async () => {
       try {
         const response = await fetch(`${API}/auth/me`, {
-          credentials: 'include'
+          credentials: "include",
         });
-        
-        if (!response.ok) throw new Error('Not authenticated');
-        
+
+        if (!response.ok) throw new Error("Not authenticated");
+
         const userData = await response.json();
         setUser(userData);
         setIsAuthenticated(true);
       } catch (error) {
         setIsAuthenticated(false);
-        navigate('/login', { state: { from: location.pathname } });
+        navigate("/login", { state: { from: location.pathname } });
       }
     };
-    
+
     checkAuth();
-  }, [location.pathname, location.state, navigate, t]);
-  
+  }, [location.pathname, navigate, t]);
+
   if (isAuthenticated === null) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-background" dir={i18n.language === 'ar' ? 'rtl' : 'ltr'}>
+      <div
+        className="min-h-screen flex items-center justify-center bg-background"
+        dir={i18n.language === "ar" ? "rtl" : "ltr"}
+      >
         <div className="text-center">
           <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary mx-auto mb-4"></div>
-          <p className="text-muted-foreground">{t('common.loading')}</p>
+          <p className="text-muted-foreground">{t("common.loading")}</p>
         </div>
       </div>
     );
   }
-  
+
   if (isAuthenticated === false) {
     return null;
   }
-  
+
   if (allowedRoles && !allowedRoles.includes(user?.role)) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-background" dir={i18n.language === 'ar' ? 'rtl' : 'ltr'}>
+      <div
+        className="min-h-screen flex items-center justify-center bg-background"
+        dir={i18n.language === "ar" ? "rtl" : "ltr"}
+      >
         <div className="text-center p-8">
-          <h2 className="text-2xl font-bold text-primary mb-4">{t('auth.unauthorized')}</h2>
-          <p className="text-muted-foreground mb-6">{t('auth.unauthorizedMessage')}</p>
-          <button onClick={() => navigate('/')} className="btn-primary px-6 py-2 rounded-lg">
-            {t('auth.backToHome')}
+          <h2 className="text-2xl font-bold text-primary mb-4">
+            {t("auth.unauthorized")}
+          </h2>
+          <p className="text-muted-foreground mb-6">
+            {t("auth.unauthorizedMessage")}
+          </p>
+          <button
+            onClick={() => navigate("/")}
+            className="btn-primary px-6 py-2 rounded-lg"
+          >
+            {t("auth.backToHome")}
           </button>
         </div>
       </div>
     );
   }
-  
+
   return children;
 }
 

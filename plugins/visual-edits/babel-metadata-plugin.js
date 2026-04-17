@@ -153,7 +153,18 @@ const buildDynamicExpressionWrapper = (child, t) =>
     false,
   );
 
+const TABLE_CONTEXT_TAGS = new Set([
+  "table", "thead", "tbody", "tfoot", "tr", "colgroup",
+  "select", "optgroup", "ul", "ol", "dl",
+]);
+
 const wrapDynamicExpressionChildren = (jsxPath, t) => {
+  // Skip wrapping for elements that have strict HTML child requirements
+  // (e.g. <span> inside <tbody> is invalid HTML and causes hydration errors)
+  const nameNode = jsxPath.node.openingElement?.name;
+  const parentTag = t.isJSXIdentifier(nameNode) ? nameNode.name : null;
+  if (parentTag && TABLE_CONTEXT_TAGS.has(parentTag)) return;
+
   const children = jsxPath.node.children || [];
   let didChange = false;
 
